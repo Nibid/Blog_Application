@@ -14,6 +14,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.college.blog.BlogNotFoundException;
 import com.college.blog.Model.Blog;
 import com.college.blog.Repository.BlogRepository;
 import com.college.blog.Service.BlogService;
@@ -36,7 +37,7 @@ public class BlogController {
 			@RequestParam("author") String author,
 			@RequestParam("category") String category,
 			@RequestParam("tags") String tags,
-			@RequestParam("timestamps") String timestamps) {
+			@RequestParam("timestamps") String timestamps) throws BlogNotFoundException{
 		service.save(file, title, content, author, category, tags, timestamps);
 	}
 	
@@ -50,7 +51,7 @@ public class BlogController {
 			@RequestParam("category") String category,
 			@RequestParam("tags") String tags,
 			@RequestParam("timestamps") String timestamps,
-			@PathVariable Integer id) {
+			@PathVariable Integer id) throws BlogNotFoundException{
 		try {
 			Blog existBlog = service.get(id);
 			service.update(id, file, title, content, author, category, tags, timestamps);
@@ -62,7 +63,7 @@ public class BlogController {
 	
 	//Delete posts
 	@DeleteMapping("/blogs/{id}")
-	public ResponseEntity <?> delete(@PathVariable Integer id) {
+	public ResponseEntity <?> delete(@PathVariable Integer id) throws BlogNotFoundException{
 		try {
 			Blog existBlog = service.get(id);
 			service.delete(id);

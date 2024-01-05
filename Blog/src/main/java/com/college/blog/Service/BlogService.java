@@ -21,6 +21,7 @@ public class BlogService {
 	@Autowired
 	private BlogRepository repository;
 	
+	//Blog save service
 	public void save(MultipartFile file, String title, String content, String author, String category, String tags, String timestamps) {
 		Blog b = new Blog();
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -43,6 +44,7 @@ public class BlogService {
 		repository.save(b);
 	}
 	
+	//Blog update service
 	public void update(int id, MultipartFile file, String title, String content, String author, String category, String tags, String timestamps) {
 		Optional<Blog> blog = repository.findById(id);
 		Blog b= blog.get();
@@ -66,6 +68,7 @@ public class BlogService {
 		repository.save(b);
 	}
 	
+	//save images service
 	public void saveFileList(MultipartFile[] files, Integer id) {
 		Optional<Blog> b = repository.findById(id);
 		Blog blog= b.get();
@@ -81,14 +84,17 @@ public class BlogService {
 		repository.save(blog);
 	}
 
+	//retrieve service
 	public Blog get(Integer id) {
 		return repository.findById(id).get();
 	}
 
+	//delete service
 	public void delete(Integer id) {
 		repository.deleteById(id);
 	}
 
+	//findAll() service
 	public List<Blog> listAll() {
 		return repository.findAll();
 	}
